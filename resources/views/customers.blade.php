@@ -6,14 +6,15 @@
             <button class="btn btn-danger text-start" type="button">Button</button>
         </div> --}}
         @include('includes.success-message')
+
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="dataTables_length" id="datatables-reponsive_length" style="font-size: 12px;">
                             აჩვენე <label>
-                                <select id="limiter" name="datatables-reponsive_length"
-                                    aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                <select id="limiter" name="datatables-reponsive_length" aria-controls="datatables-reponsive"
+                                    class="form-select form-select-sm">
                                     <option value="10">10</option>
                                     <option value="25">25</option>
                                     <option value="50">50</option>
@@ -61,11 +62,15 @@
                                             <td>{{ $customer->created_at->format('Y-m-d') }}</td>
                                             <td>{{ $customer->status }}</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                <a href="{{ route('customers.view.show', $customer->id) }}"
+                                                    class="btn btn-primary btn-sm"><i class="fa fa-eye"
+                                                        aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @isset($notFoundMessage)
+                                        <td colspan="10" class="text-center"><i class="fa-solid fa-circle-info"></i> {{ $notFoundMessage }}</td>
+                                    @endisset
                                 </tbody>
                             </table>
                         </div>

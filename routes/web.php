@@ -20,6 +20,10 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 
+Route::get('/customers/view/{customer}', [CustomerController::class, 'show'])->name('customers.view.show');
+
+Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
 Route::post('/registration', [CustomerController::class, 'store'])->name('customers.store');
 
 

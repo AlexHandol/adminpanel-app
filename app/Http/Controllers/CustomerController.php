@@ -9,15 +9,21 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::orderBy('created_at', 'DESC');
+        $customers = Customer::orderBy('created_at', 'DESC')->paginate(10);
 
         // if (request()->has('search')) {
         //     $customers = $customers->where('content', 'like', '%' . request()->get('search', '') . '%');
         // }
 
-        return view('customers', [
-            'customers' => $customers->paginate(10)
-        ]);
+        $data = [
+            'customers' => $customers,
+        ];
+
+        if ($customers->isEmpty()) {
+            $data['notFoundMessage'] = 'No Records Found';
+        }
+
+        return view('customers', $data);
     }
 
     public function store()
@@ -38,5 +44,16 @@ class CustomerController extends Controller
             ]
         );
         return redirect()->route('customers.index')->with('success', 'Customer created successfully!');
+    }
+
+    public function show(Customer $customer)
+    {
+        return view('customers.view.show', compact('customer'));
+    }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
 }
