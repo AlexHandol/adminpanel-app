@@ -51,6 +51,28 @@ class CustomerController extends Controller
         return view('customers.view.show', compact('customer'));
     }
 
+    public function edit(Customer $customer)
+    {
+        return view('customers.view.edit', compact('customer'));
+    }
+
+    public function update(Customer $customer)
+    {
+        request()->validate([
+            'full_name' => 'required|string',
+            'phone_number' => 'required|integer|digits:9',
+            'gps_id' => 'required|integer|digits:10',
+            'sim_number' => 'required|integer|digits:9'
+        ]);
+
+        $customer->full_name = request()->get('full_name', '');
+        $customer->phone_number = request()->get('phone_number', '');
+        $customer->gps_id = request()->get('gps_id', '');
+        $customer->sim_number = request()->get('sim_number', '');
+
+        return redirect()->route('customers.view.show', $customer->id)->with('success', 'Customer updated successfully!');
+    }
+
     public function destroy(Customer $customer)
     {
         $customer->delete();

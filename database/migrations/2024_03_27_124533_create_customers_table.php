@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('phone_number');
             $table->bigInteger('gps_id');
             $table->integer('sim_number');
-            $table->string('status', 30)->default('Passive');
+            $table->string('status_name', 30)->default('Passive');
             $table->timestamps();
         });
     }

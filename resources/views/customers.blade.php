@@ -2,11 +2,7 @@
 @section('content')
     <main class="content">
         @include('includes.breadcrumb')
-        {{-- <div class="d-grid col-12 mx-auto mt-2 mb-2">
-            <button class="btn btn-danger text-start" type="button">Button</button>
-        </div> --}}
         @include('includes.success-message')
-
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -60,7 +56,7 @@
                                             <td>{{ $customer->gps_id }}</td>
                                             <td>{{ $customer->sim_number }}</td>
                                             <td>{{ $customer->created_at->format('Y-m-d') }}</td>
-                                            <td>{{ $customer->status }}</td>
+                                            <td>{{ $customer->status_name }}</td>
                                             <td>
                                                 <a href="{{ route('customers.view.show', $customer->id) }}"
                                                     class="btn btn-primary btn-sm"><i class="fa fa-eye"
@@ -69,7 +65,8 @@
                                         </tr>
                                     @endforeach
                                     @isset($notFoundMessage)
-                                        <td colspan="10" class="text-center"><i class="fa-solid fa-circle-info"></i> {{ $notFoundMessage }}</td>
+                                        <td colspan="10" class="text-center"><i class="fa-solid fa-circle-info"></i>
+                                            {{ $notFoundMessage }}</td>
                                     @endisset
                                 </tbody>
                             </table>

@@ -11,7 +11,8 @@
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
             {{-- nav-link active in a tag --}}
-            <a href="/" class="nav-link text-white" aria-current="page">
+            <a href="/" class="nav-link {{ Route::is('dashboard') ? 'active' : '' }} text-white"
+                aria-current="page">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-house-door-fill" viewBox="0 0 16 16">
                     <path
@@ -21,7 +22,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="/customers" class="nav-link text-white">
+            <a href="/customers" class="nav-link {{ Route::is('customers.index', 'customers.view.show', 'customers.view.edit') ? 'active' : '' }} text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-people-fill" viewBox="0 0 16 16">
                     <path
@@ -31,7 +32,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="/registration" class="nav-link text-white">
+            <a href="/registration" class="nav-link {{ Route::is('registration') ? 'active' : '' }} text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-person-fill-add" viewBox="0 0 16 16">
                     <path

@@ -1,19 +1,9 @@
 @extends('layout.layout')
 @section('content')
     @include('includes.breadcrumb')
-    {{-- <main class="content">
-        <div class="container-fluid">
-            <div class="row justify-content-md-center">
-                <div class="col-11 ">
-                    <div class="card g-2">
-                        <div class="card-body">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main> --}}
+    <div class="container-fluid">
+        @include('includes.success-message')
+    </div>
     <main class="content">
         <div class="container-fluid p-3">
             <div class="row">
@@ -23,11 +13,11 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>მომხმარებელი</th>
+                                        <th>Full Name</th>
                                         <td>{{ $customer->full_name }}</td>
                                     </tr>
                                     <tr>
-                                        <th>მობილური</th>
+                                        <th>Phone Number</th>
                                         <td>{{ $customer->phone_number }}</td>
                                     </tr>
                                     <tr>
@@ -35,17 +25,18 @@
                                         <td>{{ $customer->gps_id }}</td>
                                     </tr>
                                     <tr>
-                                        <th>SIM ნომერი</th>
+                                        <th>SIM Number</th>
                                         <td>{{ $customer->sim_number }}</td>
                                     </tr>
                                     <tr>
-                                        <th>რეგისტრაციის თარიღი</th>
+                                        <th>Create Date</th>
                                         <td>{{ $customer->created_at->format('Y-m-d') }}</td>
                                     </tr>
                                     <tr>
                                         <th>სტატუსი</th>
                                         <td>
-                                            <div class="btn btn-info btn-sm text-light status-btn" title="სტატუსი">პასიური
+                                            <div class="btn btn-info btn-sm text-light status-btn" title="სტატუსი">
+                                                {{ $customer->status_name }}
                                             </div>
                                         </td>
                                     </tr>
@@ -53,16 +44,17 @@
                                         <th style="border: none;">მოქმედებები</th>
                                         <td style="border: none;">
                                             <div class="btn-group" role="group" aria-label="" style="gap:5px;">
-                                                <a href="#" class="btn btn-primary btn-sm"
-                                                    title="მომხმარებლის რედაქტირება">
+                                                <a href="{{ route('customers.view.edit', $customer->id) }}"
+                                                    class="btn btn-primary btn-sm" title="მომხმარებლის რედაქტირება">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
-                                                <form action="{{ route('customers.destroy', $customer->id) }}"
-                                                    method="POST">
+                                                <form id="deleteCustomerForm">
                                                     @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-danger btn-sm" title="ანგარიშის წაშლა">
-                                                        <i class="fa fa-user-times" aria-hidden="true"></i>
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        title="ანგარიშის წაშლა" data-bs-toggle="modal"
+                                                        data-bs-target="#deleteCustomerModalLabel">
+                                                        <i class="fa fa-user-times"></i>
                                                     </button>
                                                 </form>
                                             </div>
@@ -78,13 +70,13 @@
                         <div class="card-body">
                             <form method="POST">
                                 <div class="form-group">
-                                    <label class="mb-1">კომენტარის ტიპი</label>
+                                    <label class="mb-2">კომენტარის ტიპი</label>
                                     <select name="comment_type" class="form-select mb-1">
                                         <option value="1">...</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="mb-1">კომენტარი</label>
+                                    <label class="mb-2">კომენტარი</label>
                                     <textarea id="comment" name="comment" class="form-control" placeholder="ტექსტი ..."></textarea>
                                 </div>
                                 <div class="form-group">
@@ -97,7 +89,7 @@
                     <div class="card mt-3">
                         <div class="card-header">
                             <div class="d-flex justify-content-between">
-                                <h5 class="card-title">ანგარიშის კომენტარები</h5>
+                                <h6 class="card-title">ანგარიშის კომენტარები</h6>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="card-tools">
@@ -163,5 +155,6 @@
                     </div>
                 </div>
             </div>
+            @include('customers.modal.delete-customer-modal')
     </main>
 @endsection
