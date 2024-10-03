@@ -19,20 +19,7 @@
                             </label> ჩანაწერი
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="d-flex justify-content-end ">
-                            <form class="input-group-sm" role="search">
-                                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                            </form>
-                            <button class="btn btn-secondary btn-sm ms-1 mb-1" type="button" id="button-addon2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-search" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                    @include('includes.search-bar')
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table responsive dataTable no-footer dtr-inline collapsed"
@@ -49,24 +36,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($customers as $customer)
+                                    @foreach ($accounts as $account)
                                         <tr>
-                                            <td>{{ $customer->full_name }}</td>
-                                            <td>{{ $customer->phone_number }}</td>
-                                            <td>{{ $customer->gps_id }}</td>
-                                            <td>{{ $customer->sim_number }}</td>
-                                            <td>{{ $customer->created_at->format('Y-m-d') }}</td>
-                                            <td>{{ $customer->status_name }}</td>
+                                            <td>{{ $account->full_name }}</td>
+                                            <td>{{ $account->phone_number }}</td>
+                                            <td>{{ $account->gps_id }}</td>
+                                            <td>{{ $account->sim_number }}</td>
+                                            <td>{{ $account->created_at->format('Y-m-d') }}</td>
+                                            <td>{{ $account->tariffs->tariff_name }}</td>
+                                            <td>{{ $account->statuses->status_name }}</td>
                                             <td>
-                                                <a href="{{ route('customers.view.show', $customer->id) }}"
-                                                    class="btn btn-primary btn-sm"><i class="fa fa-eye"
-                                                        aria-hidden="true"></i></a>
+                                                <a href="{{ route('accounts.view.show', $account->id) }}"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
                                     @isset($notFoundMessage)
-                                        <td colspan="10" class="text-center"><i class="fa-solid fa-circle-info"></i>
-                                            {{ $notFoundMessage }}</td>
+                                        <td colspan="10" class="text-center">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                            {{ $notFoundMessage }}
+                                        </td>
                                     @endisset
                                 </tbody>
                             </table>

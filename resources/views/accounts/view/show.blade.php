@@ -14,37 +14,41 @@
                                 <tbody>
                                     <tr>
                                         <th>Full Name</th>
-                                        <td>{{ $customer->full_name }}</td>
+                                        <td>{{ $account->full_name }}</td>
                                     </tr>
                                     <tr>
                                         <th>Phone Number</th>
-                                        <td>{{ $customer->phone_number }}</td>
+                                        <td>{{ $account->phone_number }}</td>
                                     </tr>
                                     <tr>
                                         <th>GPS ID</th>
-                                        <td>{{ $customer->gps_id }}</td>
+                                        <td>{{ $account->gps_id }}</td>
                                     </tr>
                                     <tr>
                                         <th>SIM Number</th>
-                                        <td>{{ $customer->sim_number }}</td>
+                                        <td>{{ $account->sim_number }}</td>
                                     </tr>
                                     <tr>
                                         <th>Create Date</th>
-                                        <td>{{ $customer->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ $account->created_at->format('Y-m-d') }}</td>
                                     </tr>
                                     <tr>
-                                        <th>სტატუსი</th>
+                                        <th>Tariff</th>
+                                        <td>{{ $account->tariffs->tariff_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
                                         <td>
-                                            <div class="btn btn-info btn-sm text-light status-btn" title="სტატუსი">
-                                                {{ $customer->status_name }}
+                                            <div class="btn btn-info btn-sm text-light status-btn" title="status">
+                                                {{ $account->statuses->status_name }}
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th style="border: none;">მოქმედებები</th>
+                                        <th style="border: none;">Actions</th>
                                         <td style="border: none;">
                                             <div class="btn-group" role="group" aria-label="" style="gap:5px;">
-                                                <a href="{{ route('customers.view.edit', $customer->id) }}"
+                                                <a href="{{ route('accounts.view.edit', $account->id) }}"
                                                     class="btn btn-primary btn-sm" title="მომხმარებლის რედაქტირება">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
@@ -70,18 +74,18 @@
                         <div class="card-body">
                             <form method="POST">
                                 <div class="form-group">
-                                    <label class="mb-2">კომენტარის ტიპი</label>
+                                    <label class="mb-2">Comment Type</label>
                                     <select name="comment_type" class="form-select mb-1">
                                         <option value="1">...</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="mb-2">კომენტარი</label>
-                                    <textarea id="comment" name="comment" class="form-control" placeholder="ტექსტი ..."></textarea>
+                                    <label class="mb-2">Comment</label>
+                                    <textarea id="comment" name="comment" class="form-control" placeholder="Text ..."></textarea>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" name="add-comment"
-                                        class="btn btn-success btn-sm col-sm-3 pull-left mt-3">დამატება</button>
+                                        class="btn btn-success btn-sm col-sm-3 pull-left mt-3">Add</button>
                                 </div>
                             </form>
                         </div>
@@ -89,7 +93,7 @@
                     <div class="card mt-3">
                         <div class="card-header">
                             <div class="d-flex justify-content-between">
-                                <h6 class="card-title">ანგარიშის კომენტარები</h6>
+                                <h6 class="card-title">Account Comments</h6>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="card-tools">
@@ -155,6 +159,6 @@
                     </div>
                 </div>
             </div>
-            @include('customers.modal.delete-customer-modal')
+            @include('accounts.modal.delete-account-modal')
     </main>
 @endsection

@@ -7,7 +7,7 @@
                 <div class="col-11 ">
                     <div class="card g-2">
                         <div class="card-body">
-                            <form action="{{ route('customers.store') }}" method="POST">
+                            <form action="{{ route('accounts.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label>Full Name</label>

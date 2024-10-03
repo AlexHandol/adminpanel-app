@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('tariffs', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name', 100);
-            $table->integer('phone_number');
-            $table->bigInteger('gps_id');
-            $table->integer('sim_number');
-            $table->string('status_name', 30)->default('Passive');
+            $table->string('tariff_name', 50);
+            $table->decimal('tariff_price', 10, 2);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('tariffs');
     }
 };
