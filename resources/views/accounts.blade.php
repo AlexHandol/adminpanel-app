@@ -36,29 +36,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($accounts as $account)
+                                    @if ($accounts->isNotEmpty())
+                                        @foreach ($accounts as $account)
+                                            <tr>
+                                                <td>{{ $account->full_name }}</td>
+                                                <td>{{ $account->phone_number }}</td>
+                                                <td>{{ $account->gps_id }}</td>
+                                                <td>{{ $account->sim_number }}</td>
+                                                <td>{{ $account->created_at->format('Y-m-d') }}</td>
+                                                <td>{{ $account->tariffs->tariff_name }}</td>
+                                                <td>{{ $account->statuses->status_name }}</td>
+                                                <td>
+                                                    <a href="{{ route('accounts.view.show', $account->id) }}"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $account->full_name }}</td>
-                                            <td>{{ $account->phone_number }}</td>
-                                            <td>{{ $account->gps_id }}</td>
-                                            <td>{{ $account->sim_number }}</td>
-                                            <td>{{ $account->created_at->format('Y-m-d') }}</td>
-                                            <td>{{ $account->tariffs->tariff_name }}</td>
-                                            <td>{{ $account->statuses->status_name }}</td>
-                                            <td>
-                                                <a href="{{ route('accounts.view.show', $account->id) }}"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
-                                            </td>
+                                            <td colspan="7" class="text-center">No matches found.</td>
                                         </tr>
-                                    @endforeach
-                                    @isset($notFoundMessage)
-                                        <td colspan="10" class="text-center">
-                                            <i class="fa-solid fa-circle-info"></i>
-                                            {{ $notFoundMessage }}
-                                        </td>
-                                    @endisset
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

@@ -12,10 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tariffs', function (Blueprint $table) {
-            $table->id();
+            $table->id(); 
             $table->string('tariff_name', 50);
             $table->decimal('tariff_price', 10, 2);
             $table->timestamps();
+
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 

@@ -17,7 +17,12 @@ return new class extends Migration
             $table->integer('phone_number');
             $table->bigInteger('gps_id');
             $table->integer('sim_number');
+            $table->foreignId('status_id')->default(2)->constrained('statuses')->onDelete('cascade');
+            $table->foreignId('tariff_id')->constrained('tariffs')->onDelete('cascade');
             $table->timestamps();
+
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 
@@ -26,6 +31,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('accounts', function (Blueprint $table) {
+            $table->dropForeign(['status_id']);
+            $table->dropForeign(['tariff_id']);
+        });
+
         Schema::dropIfExists('accounts');
     }
 };

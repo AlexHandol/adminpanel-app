@@ -1,8 +1,9 @@
 <div class="col-sm-12 col-md-6">
     <div class="d-flex justify-content-end ">
         <form action="{{ route('accounts.index') }}" method="GET" class="d-flex input-group-sm">
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search" value="{{ request('search', '') }}" >
-            <button class="btn btn-secondary btn-sm ms-1 mb-1" type="button" id="button-addon2">
+            <input type="search" name="search" class="form-control" placeholder="Search..."
+                value="{{ request('search', '') }}">
+            <button class="btn btn-secondary btn-sm ms-1 mb-1" type="submit" id="button-addon2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-search" viewBox="0 0 16 16">
                     <path

@@ -10,26 +10,26 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $accounts = Account::with('statuses')->with('tariffs')->orderBy('created_at', 'DESC')->paginate(10);
+        $accounts = Account::with('statuses')->with('tariffs')->orderBy('created_at', 'DESC');
 
         if (request()->has('search')) {
-            $accounts = $accounts->where('content', 'like', '%' . request()->get('search', '') . '%');
+            $searchTerm = request()->get('search', '');
+
+            $accounts = $accounts->where(function ($query) use ($searchTerm) {
+                $query->where('full_name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+            });
         }
 
-        $data = [
-            'accounts' => $accounts,
-        ];
-
-        if ($accounts->isEmpty()) {
-            $data['notFoundMessage'] = 'No Records Found';
-        }
-
-        return view('accounts', $data);
+        return view('accounts', [
+            'accounts' => $accounts->paginate(10)
+        ]);
     }
 
     public function register()
     {
-        return view('registration');
+        $tariffs = Tariff::all();
+        return view('registration', compact('tariffs'));
     }
 
     public function store()
@@ -38,7 +38,8 @@ class AccountController extends Controller
             'full_name' => 'required|string|regex:/^[\p{L} ]+$/u',
             'phone_number' => 'required|integer|digits:9',
             'gps_id' => 'required|integer|digits:10',
-            'sim_number' => 'required|integer|digits:9'
+            'sim_number' => 'required|integer|digits:9',
+            'tariff_id' => 'required|exists:tariffs,id'
         ], [
             'full_name.required' => 'Full Name is required',
             'full_name.regex' => 'Full Name can only contain letters and spaces.'
@@ -50,6 +51,7 @@ class AccountController extends Controller
                 'phone_number' => request()->get('phone_number', ''),
                 'gps_id' => request()->get('gps_id', ''),
                 'sim_number' => request()->get('sim_number', ''),
+                'tariff_id' => request()->get('tariff_id'),
             ]
         );
 

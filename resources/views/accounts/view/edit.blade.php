@@ -53,13 +53,12 @@
                                 <div class="form-group mt-1">
                                     <label>Tariff</label>
                                     <select name="tariff_id" class="form-control mt-1">
-                                        <option value="{{ $account->tariff_id }}">-{{ $account->tariffs->tariff_name }}
-                                        </option>
+                                        <option value="{{ $account->tariff_id }}">-Select a tariff</option>
                                         @foreach ($tariffs as $tariff)
                                             <option value="{{ $tariff->id }}">{{ $tariff->tariff_name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('sim_number')
+                                    @error('tariff_id')
                                         <span class="d-block fs-6 text-danger mt-1">
                                             {{ $message }}
                                         </span>

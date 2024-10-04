@@ -13,7 +13,8 @@ class Account extends Model
         'full_name',
         'phone_number',
         'gps_id',
-        'sim_number'
+        'sim_number',
+        'tariff_id'
     ];
 
     public function statuses() {

@@ -47,6 +47,20 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="form-group mt-1">
+                                    <label>Tariff</label>
+                                    <select name="tariff_id" class="form-control mt-1">
+                                        <option value="">-Select a tariff</option>
+                                        @foreach ($tariffs as $tariff)
+                                            <option value="{{ $tariff->id }}">{{ $tariff->tariff_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('tariff_id')
+                                        <span class="d-block fs-6 text-danger mt-1">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary mt-4">Submit</button>
                                 </div>
