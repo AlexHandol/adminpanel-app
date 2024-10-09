@@ -10,7 +10,28 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $accounts = Account::with('statuses')->with('tariffs')->orderBy('created_at', 'DESC');
+        // $accounts = Account::with('statuses')->with('tariffs')->orderBy('created_at', 'DESC');
+
+        // if (request()->has('search')) {
+        //     $searchTerm = request()->get('search', '');
+
+        //     $accounts = $accounts->where(function ($query) use ($searchTerm) {
+        //         $query->where('full_name', 'like', '%' . $searchTerm . '%')
+        //             ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+        //     });
+        // }
+
+        // return view('accounts', [
+        //     'accounts' => $accounts->paginate(10)
+        // ]);
+
+        // AJAX AUTO SEARCH AND LIMIT
+
+
+        // Set default limit
+        $limit = request()->get('limit', 10);
+
+        $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
 
         if (request()->has('search')) {
             $searchTerm = request()->get('search', '');
@@ -22,8 +43,30 @@ class AccountController extends Controller
         }
 
         return view('accounts', [
-            'accounts' => $accounts->paginate(10)
+            'accounts' => $accounts->paginate($limit)
         ]);
+    }
+    // AJAX AUTO SEARCH AND LIMIT
+
+    public function search(Request $request)
+    {
+        $limit = $request->get('limit', 10);
+        $page = $request->get('page', 1);
+
+        $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->get('search', '');
+
+            $accounts = $accounts->where(function ($query) use ($searchTerm) {
+                $query->where('full_name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $paginatedAccounts = $accounts->paginate($limit, ['*'], 'page', $page);
+
+        return response()->json($paginatedAccounts);
     }
 
     public function register()

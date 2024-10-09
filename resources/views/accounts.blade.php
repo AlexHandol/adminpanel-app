@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <div class="dataTables_length" id="datatables-reponsive_length" style="font-size: 12px;">
+                        {{-- <div class="dataTables_length" id="datatables-reponsive_length" style="font-size: 12px;">
                             აჩვენე <label>
                                 <select id="limiter" name="datatables-reponsive_length" aria-controls="datatables-reponsive"
                                     class="form-select form-select-sm">
@@ -15,6 +15,17 @@
                                     <option value="25">25</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
+                                </select>
+                            </label> ჩანაწერი
+                        </div> --}}
+                        <div class="dataTables_length" id="datatables-reponsive_length" style="font-size: 12px;">
+                            აჩვენე <label>
+                                <select id="limiter" name="limit" aria-controls="datatables-reponsive"
+                                    class="form-select form-select-sm" onchange="updateLimit()">
+                                    <option value="10" {{ request('limit') == 10 ? 'selected' : '' }}>10</option>
+                                    <option value="25" {{ request('limit') == 25 ? 'selected' : '' }}>25</option>
+                                    <option value="50" {{ request('limit') == 50 ? 'selected' : '' }}>50</option>
+                                    <option value="100" {{ request('limit') == 100 ? 'selected' : '' }}>100</option>
                                 </select>
                             </label> ჩანაწერი
                         </div>
@@ -36,7 +47,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($accounts->isNotEmpty())
+                                    {{-- @if ($accounts->isNotEmpty())
                                         @foreach ($accounts as $account)
                                             <tr>
                                                 <td>{{ $account->full_name }}</td>
@@ -58,14 +69,30 @@
                                         <tr>
                                             <td colspan="7" class="text-center">No matches found.</td>
                                         </tr>
-                                    @endif
+                                    @endif --}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row table-footer">
+                    {{-- <div class="row table-footer">
                         <div class="col-sm-12 col-md-5 pagination-container">
-                            {{-- Pagination goes here --}}
+                            {{ $accounts->withQueryString()->links() }}
+                        </div>
+                    </div> --}}
+
+
+
+                    {{-- AJAX AUTO SEARCH AND LIMIT --}}
+
+                    <div class="row table-footer">
+                        <div class="col-sm-12 col-md-6">
+                            <div id="entries-summary" class="d-flex justify-content-start align-items-center">
+                                Showing<span id="start-entry" style="margin: 0 2px;"></span> to <span id="end-entry" style="margin: 0 2px;"></span> of <span
+                                    id="total-entries" style="margin: 0 2px;"></span> entries
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-5 pagination-container">
+                            <!-- Pagination links will be dynamically rendered here -->
                         </div>
                     </div>
                 </div>

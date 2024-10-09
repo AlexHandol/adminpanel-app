@@ -25,6 +25,9 @@ Route::get('/accounts/view/{account}', [AccountController::class, 'show'])->name
 Route::get('/accounts/edit/{account}', [AccountController::class, 'edit'])->name('accounts.view.edit');
 Route::put('/accounts/view/{account}', [AccountController::class, 'update'])->name('accounts.view.update');
 Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+// AJAX AUTO SEARCH AND LIMIT
+Route::get('/accounts/search', [AccountController::class, 'search'])->name('accounts.search');
+
 
 // Registration Route
 Route::get('/registration', [AccountController::class, 'register'])->name('registration');

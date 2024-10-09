@@ -1,0 +1,10 @@
+php artisan serve - სერვერის სტარტი
+php artisan make:controller ControllerName - კონტროლერის შექმნა
+php artisan make:model ModelName - მოდელის შექმნა
+php artisan make:migration create_cars_table - ქმნის cars ცხრილის მიგრაციას
+php artisan make:model ModelName -mcr - ყველას ერთად შექმნა
+php artisan migrate - ქმნის ცხრილს ბაზაში
+php artisan migrate:rollback - აბრუნებს წინა მოქმედება ბაზაში (შლის ცხრილს)
+php artisan make:migration add_color_to_cars_table --table=cars - ამატებს color სვეტს cars ცხრილში (ცხრილის Alter-ისთვის საჭიროა ცალკე მიგრაციის შექმნა და თავიდან გაშვება მიგრაციის)
+php artisan migrate:rollback --step=1 - ერთი ნაბიჯით უკან აბრუნებს მიგრაციას
+php artisan vendor:publish --tag=laravel-pagination - ფაბლიქზე ეშვება vendor\pagination ფოლდერი (პაგინაციის პარამეტრების შესაცვლელად)
