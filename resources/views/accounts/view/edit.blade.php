@@ -64,6 +64,20 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="form-group mt-1">
+                                    <label>Status</label>
+                                    <select name="status_id" class="form-control mt-1">
+                                        <option value="{{ $account->status_id }}">-Select a status</option>
+                                        @foreach ($statuses as $status)
+                                            <option value="{{ $status->id }}">{{ $status->status_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('status_id')
+                                        <span class="d-block fs-6 text-danger mt-1">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary mt-4">Save</button>
                                 </div>

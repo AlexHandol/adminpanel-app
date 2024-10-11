@@ -52,12 +52,12 @@
                                                     class="btn btn-primary btn-sm" title="მომხმარებლის რედაქტირება">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
-                                                <form id="deleteCustomerForm">
+                                                <form id="deleteAccountForm">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-danger btn-sm"
                                                         title="ანგარიშის წაშლა" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteCustomerModalLabel">
+                                                        data-bs-target="#deleteAccountModalLabel">
                                                         <i class="fa fa-user-times"></i>
                                                     </button>
                                                 </form>

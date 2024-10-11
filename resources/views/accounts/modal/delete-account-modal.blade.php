@@ -1,4 +1,4 @@
-<div class="modal fade" id="deleteCustomerModalLabel" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteAccountModalLabel" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

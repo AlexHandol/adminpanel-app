@@ -14,7 +14,8 @@ class Account extends Model
         'phone_number',
         'gps_id',
         'sim_number',
-        'tariff_id'
+        'tariff_id',
+        'status_id'
     ];
 
     public function statuses() {

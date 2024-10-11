@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Tariff;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function index()
+    public function index(Request $request, Account $account)
     {
         // $accounts = Account::with('statuses')->with('tariffs')->orderBy('created_at', 'DESC');
 
@@ -29,22 +30,64 @@ class AccountController extends Controller
 
 
         // Set default limit
-        $limit = request()->get('limit', 10);
+        // $tariffs = Tariff::all();
+        // $statuses = Status::all();
 
-        $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
+        // $limit = request()->get('limit', 10);
 
-        if (request()->has('search')) {
-            $searchTerm = request()->get('search', '');
+        // $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
 
-            $accounts = $accounts->where(function ($query) use ($searchTerm) {
-                $query->where('full_name', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
-            });
+        // if (request()->has('search')) {
+        //     $searchTerm = request()->get('search', '');
+
+        //     $accounts = $accounts->where(function ($query) use ($searchTerm) {
+        //         $query->where('full_name', 'like', '%' . $searchTerm . '%')
+        //             ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+        //     });
+        // }
+
+        // return view('accounts', [
+        //     'accounts' => $accounts->paginate($limit)
+        // ], compact('account', 'tariffs', 'statuses'));
+
+        $tariffs = Tariff::all();
+        $statuses = Status::all();
+        $limit = $request->get('limit', 10);
+
+        // Start building the query using the injected Account model
+        $accounts = $account->with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
+
+        // Check if the filter form was submitted
+        if ($request->has('filterSubmit')) {
+            // Apply filters only when the filter form was submitted
+            if ($request->has('tariff_id') && $request->tariff_id != '') {
+                $accounts = $accounts->where('tariff_id', $request->tariff_id);
+            }
+
+            if ($request->has('status_id') && $request->status_id != '') {
+                $accounts = $accounts->where('status_id', $request->status_id);
+            }
+
+            if ($request->has('create-date') && $request->get('create-date') != '') {
+                $createDate = $request->get('create-date');
+                $accounts = $accounts->whereDate('created_at', $createDate);
+            }
+
+        } else {
+            // Apply search as usual if no filter was applied
+            if ($request->has('search')) {
+                $searchTerm = $request->get('search', '');
+                $accounts = $accounts->where(function ($query) use ($searchTerm) {
+                    $query->where('full_name', 'like', '%' . $searchTerm . '%')
+                        ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+                });
+            }
+
         }
 
         return view('accounts', [
             'accounts' => $accounts->paginate($limit)
-        ]);
+        ], compact('account', 'tariffs', 'statuses'));
     }
     // AJAX AUTO SEARCH AND LIMIT
 
@@ -52,20 +95,50 @@ class AccountController extends Controller
     {
         $limit = $request->get('limit', 10);
         $page = $request->get('page', 1);
-
+    
+        // Start building the query using the Account model
         $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
-
+    
+        // Apply search logic
         if ($request->has('search')) {
             $searchTerm = $request->get('search', '');
-
+    
             $accounts = $accounts->where(function ($query) use ($searchTerm) {
                 $query->where('full_name', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+                    ->orWhere('phone_number', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('gps_id', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('sim_number', 'like', '%' . $searchTerm . '%');
             });
         }
-
+    
+        // Apply filter logic
+        if ($request->has('status_id')) {
+            $statusId = $request->get('status_id');
+            if ($statusId != '') {
+                $accounts = $accounts->where('status_id', $statusId);
+            }
+        }
+    
+        // You can add other filters here as needed
+        // For example, filtering by tariff_id:
+        if ($request->has('tariff_id')) {
+            $tariffId = $request->get('tariff_id');
+            if ($tariffId != '') {
+                $accounts = $accounts->where('tariff_id', $tariffId);
+            }
+        }
+    
+        // If you need to filter by created_at date, add that here
+        if ($request->has('create-date')) {
+            $createDate = $request->get('create-date');
+            if ($createDate != '') {
+                $accounts = $accounts->whereDate('created_at', $createDate);
+            }
+        }
+    
+        // Paginate the results
         $paginatedAccounts = $accounts->paginate($limit, ['*'], 'page', $page);
-
+    
         return response()->json($paginatedAccounts);
     }
 
@@ -109,7 +182,8 @@ class AccountController extends Controller
     public function edit(Account $account)
     {
         $tariffs = Tariff::all();
-        return view('accounts.view.edit', compact('account', 'tariffs'));
+        $statuses = Status::all();
+        return view('accounts.view.edit', compact('account', 'tariffs', 'statuses'));
     }
 
     public function update(Account $account)
@@ -126,6 +200,7 @@ class AccountController extends Controller
         $account->gps_id = request()->get('gps_id', '');
         $account->sim_number = request()->get('sim_number', '');
         $account->tariff_id = request()->get('tariff_id');
+        $account->status_id = request()->get('status_id');
         $account->save();
 
         return redirect()->route('accounts.view.show', $account->id)->with('success', 'Account updated successfully!');

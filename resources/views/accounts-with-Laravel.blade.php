@@ -31,25 +31,37 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbody">
-                                    {{-- Automatically Fetching From JavaScript--}}
+                                <tbody>
+                                    @if ($accounts->isNotEmpty())
+                                        @foreach ($accounts as $account)
+                                            <tr>
+                                                <td>{{ $account->full_name }}</td>
+                                                <td>{{ $account->phone_number }}</td>
+                                                <td>{{ $account->gps_id }}</td>
+                                                <td>{{ $account->sim_number }}</td>
+                                                <td>{{ $account->created_at->format('Y-m-d') }}</td>
+                                                <td>{{ $account->tariffs->tariff_name }}</td>
+                                                <td>{{ $account->statuses->status_name }}</td>
+                                                <td>
+                                                    <a href="{{ route('accounts.view.show', $account->id) }}"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="7" class="text-center">No matches found.</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="row table-footer">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-7">
-                                <div class="dataTables_info" id="dataTables_info" role="status" aria-live="polite">
-                                    Showing <span id="start-entry"></span> to <span id="end-entry"></span> of <span
-                                        id="total-entries"></span> entries
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-5 pagination-container">
-                                <div class="dataTables_paginate paging_simple_numbers" id="dataTables_paginate">
-                                    <!-- Pagination links will be dynamically rendered here -->
-                                </div>
-                            </div>
+                        <div class="col-sm-12 col-md-5 pagination-container">
+                            {{ $accounts->withQueryString()->links() }}
                         </div>
                     </div>
                 </div>
