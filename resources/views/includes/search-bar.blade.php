@@ -32,7 +32,9 @@
             const statusId = statusSelect.value;
             const createDate = createDateInput.value;
 
-            fetch(`{{ route('accounts.search') }}?limit=${limit}&search=${search}&page=${page}&tariff_id=${tariffId}&status_id=${statusId}&create-date=${createDate}`)
+            fetch(
+                    `{{ route('accounts.search') }}?limit=${limit}&search=${search}&page=${page}&tariff_id=${tariffId}&status_id=${statusId}&create-date=${createDate}`
+                )
                 .then(response => response.json())
                 .then(data => {
                     // Clear the table body
@@ -49,7 +51,7 @@
                                     <td>${account.sim_number}</td>
                                     <td>${formatDate(account.created_at)}</td>
                                     <td>${account.tariffs.tariff_name}</td>
-                                    <td>${account.statuses.status_name}</td>
+                                    <td class='statuses'>${account.statuses.status_name}</td>
                                     <td>
                                         <a href="{{ route('accounts.view.show', '') }}/${account.id}" class="btn btn-primary btn-sm">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
@@ -60,12 +62,40 @@
                             tableBody.insertAdjacentHTML('beforeend', row);
                         });
 
+                        elements = document.getElementsByClassName("statuses");
+                        for (var i = elements.length; i--;) {
+                            if (elements[i].innerHTML === "Active" || elements[i].innerHTML ===
+                                "თავისუფალი" || elements[i].innerHTML ===
+                                "მარაგშია" || elements[i].innerHTML === "დამონტაჟებული") {
+                                elements[i].style.color = "#28a745";
+                            }
+                            if (elements[i].innerHTML === "Passive") {
+                                elements[i].style.color = "#17a2b8";
+                            }
+                            if (elements[i].innerHTML === "Overdue" || elements[i].innerHTML ===
+                                "დაკავებული" || elements[i].innerHTML ===
+                                "არ არის მარაგში") {
+                                elements[i].style.color = "#dc3545";
+                            }
+                            if (elements[i].innerHTML === "Compensation") {
+                                elements[i].style.color = "#ff8c00";
+                            }
+                            if (elements[i].innerHTML === "Free") {
+                                elements[i].style.color = "#6c757d";
+                            }
+                            if (elements[i].innerHTML === "Messaged" || elements[i].innerHTML ===
+                                "Reserved") {
+                                elements[i].style.color = "#fcb92c";
+                            }
+                        }
+
                         // Update the summary of how many entries are shown
                         document.getElementById('start-entry').innerText = data.from || 0;
                         document.getElementById('end-entry').innerText = data.to || 0;
                         document.getElementById('total-entries').innerText = data.total || 0;
                     } else {
-                        tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No matches found.</td></tr>';
+                        tableBody.innerHTML =
+                            '<tr><td colspan="7" class="text-center">No matches found.</td></tr>';
                         // Reset the entry summary to zero
                         document.getElementById('start-entry').innerText = 0;
                         document.getElementById('end-entry').innerText = 0;
@@ -101,7 +131,8 @@
             // Page Number Links with ellipsis logic
             if (data.last_page > 5) {
                 for (let i = 1; i <= data.last_page; i++) {
-                    if (i <= 2 || i >= data.last_page - 1 || (i >= data.current_page - 1 && i <= data.current_page + 1)) {
+                    if (i <= 2 || i >= data.last_page - 1 || (i >= data.current_page - 1 && i <= data
+                            .current_page + 1)) {
                         const pageLi = document.createElement('li');
                         pageLi.className = `page-item ${i === data.current_page ? 'active' : ''}`;
                         const pageLink = document.createElement('a');

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function index(Request $request, Account $account)
+    public function index(Account $account)
     {
         // $accounts = Account::with('statuses')->with('tariffs')->orderBy('created_at', 'DESC');
 
@@ -28,61 +28,21 @@ class AccountController extends Controller
 
         // AJAX AUTO SEARCH AND LIMIT
 
-
         // Set default limit
-        // $tariffs = Tariff::all();
-        // $statuses = Status::all();
-
-        // $limit = request()->get('limit', 10);
-
-        // $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
-
-        // if (request()->has('search')) {
-        //     $searchTerm = request()->get('search', '');
-
-        //     $accounts = $accounts->where(function ($query) use ($searchTerm) {
-        //         $query->where('full_name', 'like', '%' . $searchTerm . '%')
-        //             ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
-        //     });
-        // }
-
-        // return view('accounts', [
-        //     'accounts' => $accounts->paginate($limit)
-        // ], compact('account', 'tariffs', 'statuses'));
-
         $tariffs = Tariff::all();
         $statuses = Status::all();
-        $limit = $request->get('limit', 10);
 
-        // Start building the query using the injected Account model
-        $accounts = $account->with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
+        $limit = request()->get('limit', 10);
 
-        // Check if the filter form was submitted
-        if ($request->has('filterSubmit')) {
-            // Apply filters only when the filter form was submitted
-            if ($request->has('tariff_id') && $request->tariff_id != '') {
-                $accounts = $accounts->where('tariff_id', $request->tariff_id);
-            }
+        $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
 
-            if ($request->has('status_id') && $request->status_id != '') {
-                $accounts = $accounts->where('status_id', $request->status_id);
-            }
+        if (request()->has('search')) {
+            $searchTerm = request()->get('search', '');
 
-            if ($request->has('create-date') && $request->get('create-date') != '') {
-                $createDate = $request->get('create-date');
-                $accounts = $accounts->whereDate('created_at', $createDate);
-            }
-
-        } else {
-            // Apply search as usual if no filter was applied
-            if ($request->has('search')) {
-                $searchTerm = $request->get('search', '');
-                $accounts = $accounts->where(function ($query) use ($searchTerm) {
-                    $query->where('full_name', 'like', '%' . $searchTerm . '%')
-                        ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
-                });
-            }
-
+            $accounts = $accounts->where(function ($query) use ($searchTerm) {
+                $query->where('full_name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('gps_id', 'like', '%' . $searchTerm . '%');
+            });
         }
 
         return view('accounts', [
@@ -118,8 +78,6 @@ class AccountController extends Controller
                 $accounts = $accounts->where('status_id', $statusId);
             }
         }
-    
-        // You can add other filters here as needed
         // For example, filtering by tariff_id:
         if ($request->has('tariff_id')) {
             $tariffId = $request->get('tariff_id');
@@ -127,7 +85,6 @@ class AccountController extends Controller
                 $accounts = $accounts->where('tariff_id', $tariffId);
             }
         }
-    
         // If you need to filter by created_at date, add that here
         if ($request->has('create-date')) {
             $createDate = $request->get('create-date');

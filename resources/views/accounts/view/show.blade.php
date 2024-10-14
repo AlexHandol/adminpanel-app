@@ -39,7 +39,7 @@
                                     <tr>
                                         <th>Status</th>
                                         <td>
-                                            <div class="btn btn-info btn-sm text-light status-btn" title="status">
+                                            <div class="btn btn-sm text-light status-btn" id="statusBtn" title="status">
                                                 {{ $account->statuses->status_name }}
                                             </div>
                                         </td>
