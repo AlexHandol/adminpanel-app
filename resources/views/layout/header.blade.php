@@ -14,6 +14,7 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
                         class="rounded-circle">
+                    {{ Auth::user()->name }}
                 </a>
                 <ul class="dropdown-menu text-small" style="">
                     <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -22,7 +23,12 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item">Sign out</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <a href="/dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi pe-none me-2" width="40" height="32">
             <use xlink:href="#bootstrap"></use>
         </svg>
@@ -11,7 +11,7 @@
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
             {{-- nav-link active in a tag --}}
-            <a href="/" class="nav-link {{ Route::is('dashboard') ? 'active' : '' }} text-white"
+            <a href="/dashboard" class="nav-link {{ Route::is('dashboard') ? 'active' : '' }} text-white"
                 aria-current="page">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-house-door-fill" viewBox="0 0 16 16">
