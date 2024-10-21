@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageNavigationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,12 +24,15 @@ Route::middleware(['auth'])->group(function () {
 
     // Account Route
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
+    Route::get('/accounts/search', [AccountController::class, 'search'])->name('accounts.search');
     Route::get('/accounts/view/{account}', [AccountController::class, 'show'])->name('accounts.view.show');
     Route::get('/accounts/edit/{account}', [AccountController::class, 'edit'])->name('accounts.view.edit');
     Route::put('/accounts/view/{account}', [AccountController::class, 'update'])->name('accounts.view.update');
+    Route::post('/accounts/comments/{account}', [CommentController::class, 'store'])->name('accounts.comments.store');
     Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
-    // AJAX AUTO SEARCH AND LIMIT
-    Route::get('/accounts/search', [AccountController::class, 'search'])->name('accounts.search');
+
+    // Profile Route
+    Route::get('/profile', [UserController::class, 'index'])->name('profile');
 
     // Registration Route
     Route::get('/registration', [AccountController::class, 'register'])->name('registration');

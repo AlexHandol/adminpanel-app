@@ -18,11 +18,17 @@ class Account extends Model
         'status_id'
     ];
 
-    public function statuses() {
+    public function statuses()
+    {
         return $this->belongsTo(Status::class, 'status_id');
     }
 
-    public function tariffs() {
+    public function tariffs()
+    {
         return $this->belongsTo(Tariff::class, 'tariff_id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

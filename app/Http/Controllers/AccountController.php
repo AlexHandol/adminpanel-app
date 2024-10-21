@@ -55,14 +55,14 @@ class AccountController extends Controller
     {
         $limit = $request->get('limit', 10);
         $page = $request->get('page', 1);
-    
+
         // Start building the query using the Account model
         $accounts = Account::with('statuses', 'tariffs')->orderBy('created_at', 'DESC');
-    
+
         // Apply search logic
         if ($request->has('search')) {
             $searchTerm = $request->get('search', '');
-    
+
             $accounts = $accounts->where(function ($query) use ($searchTerm) {
                 $query->where('full_name', 'like', '%' . $searchTerm . '%')
                     ->orWhere('phone_number', 'like', '%' . $searchTerm . '%')
@@ -70,7 +70,7 @@ class AccountController extends Controller
                     ->orWhere('sim_number', 'like', '%' . $searchTerm . '%');
             });
         }
-    
+
         // Apply filter logic
         if ($request->has('status_id')) {
             $statusId = $request->get('status_id');
@@ -92,10 +92,10 @@ class AccountController extends Controller
                 $accounts = $accounts->whereDate('created_at', $createDate);
             }
         }
-    
+
         // Paginate the results
         $paginatedAccounts = $accounts->paginate($limit, ['*'], 'page', $page);
-    
+
         return response()->json($paginatedAccounts);
     }
 
@@ -133,7 +133,9 @@ class AccountController extends Controller
 
     public function show(Account $account)
     {
-        return view('accounts.view.show', compact('account'));
+        $comments = $account->comments()->orderBy('created_at', 'DESC')->paginate(5);
+
+        return view('accounts.view.show', compact('account', 'comments'));
     }
 
     public function edit(Account $account)

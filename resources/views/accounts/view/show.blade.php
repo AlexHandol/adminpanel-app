@@ -72,19 +72,20 @@
                 <div class="col-16 col-md-6 col-sm-6">
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST">
+                            <form action="{{ route('accounts.comments.store', $account->id) }}" method="POST">
                                 <div class="form-group">
+                                    @csrf
                                     <label class="mb-2">Comment Type</label>
                                     <select name="comment_type" class="form-select mb-1">
-                                        <option value="1">...</option>
+                                        <option value="Test">Test</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="mb-2">Comment</label>
-                                    <textarea id="comment" name="comment" class="form-control" placeholder="Text ..."></textarea>
+                                    <textarea id="comment" name="comment_content" class="form-control" placeholder="Text ..."></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" name="add-comment"
+                                    <button type="submit"
                                         class="btn btn-success btn-sm col-sm-3 pull-left mt-3">Add</button>
                                 </div>
                             </form>
@@ -101,12 +102,14 @@
                                         <div id="pagination" class="light-theme simple-pagination">
                                             <ul>
                                                 {{-- PAGINATION GOES HERE --}}
+                                                {{ $comments->withQueryString()->links() }}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card-body p-0">
+                        <div class="card-body p-0">
                             <div class="table-responsive">
                                 <div class="modal fade" id="modal-delete-1529" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,8 +132,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table class="table responsive" id="datatables-reponsive" width="100%"
-                                    cellspacing="0">
+                                <table class="table responsive" id="datatables-reponsive" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th class="comment-th">ტიპი</th>
@@ -141,24 +143,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="item">
-                                            <td class="comment-td">ტრანზაქცია (თებერვალი)</td>
-                                            <td class="comment-td"> </td>
-                                            <td class="comment-td">ალექსანდრე ხანდოლიშვილი</td>
-                                            <td class="comment-td">2024-02-22 22:50:43</td>
-                                            <td style="padding-left: 2px;"><button class="delete-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-delete-1529"><i
-                                                        class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-    
-                                        </tr>
+                                        @if ($account->comments->isNotEmpty())
+                                            @foreach ($account->comments as $comment)
+                                                <tr>
+                                                    <td>{{ $comment->comment_type }}</td>
+                                                    <td>{{ $comment->comment_content }}</td>
+                                                    <td>{{ $comment->user->name }}</td>
+                                                    <td>{{ $comment->created_at->format('Y-m-d H:i:s') }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="7" class="text-center">No matches found.</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div> --}}
                     </div>
                 </div>
             </div>
-            @include('accounts.modal.delete-account-modal')
+        </div>
+        @include('accounts.modal.delete-account-modal')
     </main>
 @endsection
