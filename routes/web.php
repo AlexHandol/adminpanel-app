@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Profile Route
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
+    Route::get('/profile/edit/{user}', [UserController::class, 'edit'])->name('profile.view.edit');
+    Route::put('/profile/view/{user}', [UserController::class, 'update'])->name('profile.view.update');
 
     // Registration Route
     Route::get('/registration', [AccountController::class, 'register'])->name('registration');

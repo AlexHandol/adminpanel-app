@@ -148,8 +148,8 @@
                                                 <tr>
                                                     <td>{{ $comment->comment_type }}</td>
                                                     <td>{{ $comment->comment_content }}</td>
-                                                    <td>{{ $comment->user->name }}</td>
                                                     <td>{{ $comment->created_at->format('Y-m-d H:i:s') }}</td>
+                                                    <td>{{ $comment->user->first_name }} {{$comment->user->last_name}}</td>
                                                 </tr>
                                             @endforeach
                                         @else

@@ -18,9 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'profile_image',
     ];
 
     /**
@@ -46,5 +49,12 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getImageURL() {
+        if ($this->profile_image) {
+            return url('storage/' . $this->profile_image);
+        }
+        return "http://ssl.gstatic.com/accounts/ui/avatar_2x.png";
     }
 }
