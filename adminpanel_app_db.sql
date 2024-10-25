@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2024 at 01:56 PM
+-- Generation Time: Oct 25, 2024 at 09:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -70,7 +70,52 @@ INSERT INTO `accounts` (`id`, `full_name`, `phone_number`, `gps_id`, `sim_number
 (24, 'ნათია მემანიშვილი', 577282399, 7301056585, 599800434, 2, 2, '2024-10-09 05:02:16', '2024-10-09 05:02:16'),
 (25, 'ალექსანდრ ბელოვ', 595765584, 7301056587, 591228528, 2, 1, '2024-10-09 05:02:37', '2024-10-09 05:02:37'),
 (26, 'მამუკა ჯაფარიძე', 577773634, 5056934190, 511778634, 2, 2, '2024-10-09 05:02:55', '2024-10-09 05:02:55'),
-(27, 'ელხან ანაგიევი', 568080594, 9172172329, 599551601, 2, 2, '2024-10-09 05:03:16', '2024-10-09 05:03:16');
+(27, 'ელხან ანაგიევი', 568080594, 9172172329, 599551601, 2, 2, '2024-10-09 05:03:16', '2024-10-09 05:03:16'),
+(28, 'გიგა გოგაშვილი', 551907657, 7845010122, 511443277, 2, 2, '2024-10-11 02:34:37', '2024-10-11 02:34:37'),
+(29, 'მერაბ გალაშვილი', 551787896, 9171702863, 551044860, 2, 1, '2024-10-11 02:35:12', '2024-10-11 02:35:12'),
+(30, 'ნიკა ობგაიძე', 599853075, 9171767461, 599853078, 1, 1, '2024-10-11 02:35:32', '2024-10-21 11:04:42'),
+(32, 'მედეა ჯორჯიკია', 555331122, 9171767468, 599887744, 1, 2, '2024-10-23 21:50:58', '2024-10-23 21:51:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `comment_type` varchar(50) NOT NULL,
+  `comment_content` varchar(500) DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `account_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `comment_type`, `comment_content`, `user_id`, `account_id`, `created_at`, `updated_at`) VALUES
+(3, 'Test', 'lalalaaa', 1, 30, '2024-10-21 05:48:37', '2024-10-21 05:48:37'),
+(8, 'Test', NULL, 1, 30, '2024-10-21 11:04:48', '2024-10-21 11:04:48'),
+(9, 'Test', NULL, 1, 30, '2024-10-21 11:04:50', '2024-10-21 11:04:50'),
+(10, 'Test', NULL, 1, 30, '2024-10-21 11:04:51', '2024-10-21 11:04:51'),
+(11, 'Test', NULL, 1, 30, '2024-10-21 11:04:53', '2024-10-21 11:04:53'),
+(12, 'Test', NULL, 1, 30, '2024-10-21 11:04:57', '2024-10-21 11:04:57'),
+(13, 'Test', NULL, 1, 28, '2024-10-21 11:23:28', '2024-10-21 11:23:28'),
+(14, 'Test', NULL, 1, 28, '2024-10-21 11:23:33', '2024-10-21 11:23:33'),
+(15, 'Test', NULL, 1, 28, '2024-10-21 11:23:34', '2024-10-21 11:23:34'),
+(16, 'Test', NULL, 1, 28, '2024-10-21 11:23:35', '2024-10-21 11:23:35'),
+(17, 'Test', NULL, 1, 28, '2024-10-21 11:23:36', '2024-10-21 11:23:36'),
+(18, 'Test', NULL, 1, 28, '2024-10-21 11:23:38', '2024-10-21 11:23:38'),
+(19, 'Test', 'ტესტტტ', 1, 32, '2024-10-23 21:51:16', '2024-10-23 21:51:16'),
+(20, 'Test', 'testtt', 2, 32, '2024-10-23 21:53:04', '2024-10-23 21:53:04'),
+(21, 'Test', NULL, 2, 32, '2024-10-23 22:02:13', '2024-10-23 22:02:13'),
+(22, 'Test', NULL, 2, 29, '2024-10-23 22:04:35', '2024-10-23 22:04:35'),
+(23, 'Test', NULL, 2, 29, '2024-10-23 22:04:40', '2024-10-23 22:04:40'),
+(24, 'Test', NULL, 2, 32, '2024-10-23 22:05:50', '2024-10-23 22:05:50'),
+(25, 'Test', 'dada', 1, 30, '2024-10-25 14:46:55', '2024-10-25 14:46:55');
 
 -- --------------------------------------------------------
 
@@ -111,7 +156,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (25, '2024_10_04_051941_create_statuses_table', 1),
 (26, '2024_10_04_051942_create_tariffs_table', 1),
-(27, '2024_10_04_051943_create_accounts_table', 1);
+(27, '2024_10_04_051943_create_accounts_table', 1),
+(30, '2024_10_20_103723_create_comments_table', 2);
 
 -- --------------------------------------------------------
 
@@ -195,14 +241,26 @@ INSERT INTO `tariffs` (`id`, `tariff_name`, `tariff_price`, `created_at`, `updat
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `phone_number` int(9) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `profile_image` varchar(255) DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `phone_number`, `email`, `email_verified_at`, `password`, `profile_image`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Handol_17', 'Alex', 'Handol', 593788402, 'alex.handol@gmail.com', NULL, '$2y$10$XKBIBdi0F7pH1JpiJrgRK.gqHloZKAE.ygVvZdUR8bPXraHeJ7nYC', 'profile/ldiKwD0OnMLh9KJOe2Z0Lx0fVdXcnjjPrNuBq5t6.jpg', NULL, NULL, '2024-10-23 21:49:46'),
+(2, 'sandrokhando', 'Aleksandre', 'Khandolishvili', 571244530, 'test@gmail.com', NULL, '$2y$10$XKBIBdi0F7pH1JpiJrgRK.gqHloZKAE.ygVvZdUR8bPXraHeJ7nYC', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -215,6 +273,14 @@ ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `accounts_status_id_foreign` (`status_id`),
   ADD KEY `accounts_tariff_id_foreign` (`tariff_id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comments_user_id_foreign` (`user_id`),
+  ADD KEY `comments_account_id_foreign` (`account_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -270,7 +336,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -282,7 +354,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -306,7 +378,7 @@ ALTER TABLE `tariffs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -318,6 +390,13 @@ ALTER TABLE `users`
 ALTER TABLE `accounts`
   ADD CONSTRAINT `accounts_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `accounts_tariff_id_foreign` FOREIGN KEY (`tariff_id`) REFERENCES `tariffs` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_account_id_foreign` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
