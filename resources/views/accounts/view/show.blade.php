@@ -143,13 +143,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($account->comments->isNotEmpty())
-                                            @foreach ($account->comments as $comment)
+                                        @if ($comments->isNotEmpty())
+                                            @foreach ($comments as $comment)
                                                 <tr>
                                                     <td>{{ $comment->comment_type }}</td>
                                                     <td>{{ $comment->comment_content }}</td>
                                                     <td>{{ $comment->created_at->format('Y-m-d H:i:s') }}</td>
-                                                    <td>{{ $comment->user->first_name }} {{$comment->user->last_name}}</td>
+                                                    <td>{{ $comment->user->first_name }} {{ $comment->user->last_name }}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else
